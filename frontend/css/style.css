@@ -86,11 +86,36 @@ body.bg-light-pastel {
 .kpi-card-modern {
     border-radius: 16px;
     transition: transform 0.2s ease, box-shadow 0.2s ease;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    overflow: hidden;
+    /* Evitar desbordamiento visual */
+    min-width: 0;
+    /* Permitir que el flex item se encoja correctamente */
 }
 
 .kpi-card-modern:hover {
     transform: translateY(-3px);
-    box-shadow: 0 8px 24px rgba(0,0,0,0.08) !important;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08) !important;
+}
+
+.kpi-card-modern .h3 {
+    font-size: clamp(1.25rem, 4vw, 1.875rem);
+    /* Tamaño fluido */
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* Títulos de KPI */
+.kpi-card-modern .text-muted {
+    line-height: 1.2;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
 }
 
 .text-success-soft {
@@ -205,6 +230,7 @@ body.bg-light-pastel {
         opacity: 0;
         transform: translateY(10px);
     }
+
     to {
         opacity: 1;
         transform: translateY(0);

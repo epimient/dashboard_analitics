@@ -82,9 +82,9 @@ const App = {
 
     updateKPIs(stats) {
         document.getElementById('kpi-total').textContent = stats.total_responses;
-        document.getElementById('kpi-presencial-ok').textContent = `${stats.pct_attends_ok}%`;
-        document.getElementById('kpi-virtual-pref').textContent = `${stats.pct_virtual + stats.pct_hibrida}%`;
-        document.getElementById('kpi-internet').textContent = `${stats.pct_stable_internet}%`;
+        document.getElementById('kpi-presencial-ok').textContent = `${stats.pct_attends_ok.toFixed(2)}%`;
+        document.getElementById('kpi-virtual-pref').textContent = `${(stats.pct_virtual + stats.pct_hibrida).toFixed(2)}%`;
+        document.getElementById('kpi-internet').textContent = `${stats.pct_stable_internet.toFixed(2)}%`;
     }
 };
 

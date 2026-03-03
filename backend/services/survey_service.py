@@ -50,7 +50,7 @@ class SurveyService:
                 DistributionItem(
                     label=label,
                     count=count,
-                    percentage=round(count / total * 100, 1) if total else 0.0,
+                    percentage=round(count / total * 100, 2) if total else 0.0,
                 )
                 for label, count in counter.most_common()
             ]
@@ -58,7 +58,7 @@ class SurveyService:
         def pct(field: str, *matches: str) -> float:
             m = [r for r in data if getattr(r, field) and
                  any(v.lower() in getattr(r, field, "").lower() for v in matches)]
-            return round(len(m) / total * 100, 1) if total else 0.0
+            return round(len(m) / total * 100, 2) if total else 0.0
 
         return SurveyStats(
             total_responses=total,

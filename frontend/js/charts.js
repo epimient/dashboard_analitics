@@ -36,6 +36,7 @@ export const Charts = {
     renderDoughnut(canvasId, dataset) {
         const labels = dataset.map(d => d.label);
         const values = dataset.map(d => d.count);
+        const percentages = dataset.map(d => d.percentage);
 
         this._initChart(canvasId, {
             type: 'doughnut',
@@ -64,7 +65,15 @@ export const Charts = {
                         borderColor: '#e2e8f0',
                         borderWidth: 1,
                         padding: 12,
-                        displayColors: true
+                        displayColors: true,
+                        callbacks: {
+                            label: function(context) {
+                                const label = context.label || '';
+                                const value = context.parsed || 0;
+                                const percentage = percentages[context.dataIndex] || 0;
+                                return `${label}: ${value} (${percentage.toFixed(2)}%)`;
+                            }
+                        }
                     }
                 },
                 cutout: '70%'
@@ -75,6 +84,7 @@ export const Charts = {
     renderBar(canvasId, dataset, orientation = 'vertical') {
         const labels = dataset.map(d => d.label);
         const values = dataset.map(d => d.count);
+        const percentages = dataset.map(d => d.percentage);
 
         this._initChart(canvasId, {
             type: 'bar',
@@ -94,7 +104,24 @@ export const Charts = {
                 indexAxis: orientation === 'horizontal' ? 'y' : 'x',
                 responsive: true,
                 maintainAspectRatio: false,
-                plugins: { legend: { display: false } },
+                plugins: {
+                    legend: { display: false },
+                    tooltip: {
+                        backgroundColor: 'rgba(255, 255, 255, 0.9)',
+                        titleColor: '#1e293b',
+                        bodyColor: '#475569',
+                        borderColor: '#e2e8f0',
+                        borderWidth: 1,
+                        padding: 12,
+                        callbacks: {
+                            label: function(context) {
+                                const value = context.parsed || 0;
+                                const percentage = percentages[context.dataIndex] || 0;
+                                return ` ${value} (${percentage.toFixed(2)}%)`;
+                            }
+                        }
+                    }
+                },
                 scales: {
                     y: {
                         beginAtZero: true,
