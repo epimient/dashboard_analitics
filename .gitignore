@@ -1,0 +1,93 @@
+# ===========================================
+# Survey Analytics Dashboard - .gitignore
+# ===========================================
+
+# --- Python ---
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# --- Entornos Virtuales ---
+venv/
+ENV/
+env/
+.venv
+
+# --- IDEs ---
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# --- Variables de Entorno y Secrets ---
+.env
+.env.local
+.env.*.local
+*.key
+secrets.json
+
+# --- Logs ---
+*.log
+logs/
+
+# --- Base de Datos ---
+*.db
+*.sqlite
+*.sqlite3
+
+# --- Node (si se usa en frontend) ---
+node_modules/
+npm-debug.log
+yarn-error.log
+
+# --- Archivos temporales ---
+tmp/
+temp/
+*.tmp
+*.bak
+
+# --- Documentación generada ---
+docs/_build/
+site/
+
+# --- Testing ---
+.pytest_cache/
+.coverage
+htmlcov/
+.tox/
+
+# --- Jupyter Notebook ---
+.ipynb_checkpoints
+
+# --- Certificados ---
+*.pem
+*.cert
+*.key
+
+# --- Google Apps Script (opcional, si no quieres subir el código) ---
+# google_apps_script/.claspignore
+# google_apps_script/appsscript.json
+
+# --- Excepciones ---
+# Mantener .env.example para referencia
+!.env.example

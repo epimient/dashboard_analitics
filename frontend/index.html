@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Survey Analytics | Dashboard</title>
+    <!-- Google Fonts: Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body class="bg-light-pastel">
+    <div class="container-fluid p-0 d-flex flex-column flex-md-row min-vh-100">
+        <!-- Sidebar -->
+        <aside class="sidebar-modern shadow-sm">
+            <div class="p-4 border-bottom">
+                <h2 class="h5 mb-0 fw-bold text-primary-soft">
+                    <i class="bi bi-graph-up-arrow me-2"></i> Survey Analytics
+                </h2>
+            </div>
+
+            <div class="sidebar-body p-3">
+                <nav class="nav flex-column gap-2 mb-4">
+                    <a href="#dashboard" class="nav-link active">
+                        <i class="bi bi-speedometer2 me-2"></i> Dashboard
+                    </a>
+                    <a href="#ai-analysis" class="nav-link">
+                        <i class="bi bi-robot me-2"></i> Análisis IA
+                    </a>
+                </nav>
+
+                <div class="sidebar-section mb-4">
+                    <h6 class="text-muted text-uppercase small fw-bold mb-3">Datos</h6>
+                    <div class="text-center py-3 bg-primary-soft-bg rounded-3 mb-3">
+                        <i class="bi bi-google text-success mb-2" style="font-size: 1.5rem;"></i>
+                        <p class="small mb-0 fw-semibold">Conectado a Google Sheets</p>
+                        <small class="text-muted" id="data-status">Sincronizado</small>
+                    </div>
+                    <button id="btn-refresh-data" class="btn btn-outline-primary btn-sm w-100">
+                        <i class="bi bi-arrow-clockwise me-2"></i> Actualizar datos
+                    </button>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-body flex-grow-1 p-4 p-md-5">
+            <header class="d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-3 mb-5">
+                <div>
+                    <h1 class="h2 fw-bold text-dark-soft">Dashboard Principal</h1>
+                    <p class="text-muted mb-0">Análisis detallado de encuestas de modalidad</p>
+                </div>
+                <div class="d-flex gap-2">
+                    <button id="btn-refresh" class="btn btn-white shadow-sm btn-sm">
+                        <i class="bi bi-arrow-clockwise"></i> Actualizar
+                    </button>
+                    <button id="btn-export" class="btn btn-primary-soft shadow-sm btn-sm">
+                        <i class="bi bi-download me-1"></i> Exportar Reporte
+                    </button>
+                </div>
+            </header>
+
+            <!-- KPIs -->
+            <section class="row g-4 mb-5">
+                <div class="col-md-3">
+                    <div class="kpi-card-modern bg-white p-4 shadow-sm h-100 border-0">
+                        <div class="text-muted small fw-medium mb-1">Total Respuestas</div>
+                        <div class="h3 fw-bold mb-0 text-dark-soft" id="kpi-total">0</div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="kpi-card-modern bg-white p-4 shadow-sm h-100 border-0">
+                        <div class="text-muted small fw-medium mb-1">Asistencia Presencial</div>
+                        <div class="h3 fw-bold mb-0 text-success-soft" id="kpi-presencial-ok">0%</div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="kpi-card-modern bg-white p-4 shadow-sm h-100 border-0">
+                        <div class="text-muted small fw-medium mb-1">Pref. Virtual/Híbrida</div>
+                        <div class="h3 fw-bold mb-0 text-info-soft" id="kpi-virtual-pref">0%</div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="kpi-card-modern bg-white p-4 shadow-sm h-100 border-0">
+                        <div class="text-muted small fw-medium mb-1">Internet Estable</div>
+                        <div class="h3 fw-bold mb-0 text-warning-soft" id="kpi-internet">0%</div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Charts -->
+            <section class="row g-4 mb-5" id="dashboard">
+                <div class="col-lg-6">
+                    <div class="card border-0 shadow-sm rounded-4 p-4 h-100">
+                        <h5 class="fw-bold mb-4 text-dark-soft">Modalidad Preferida</h5>
+                        <div class="chart-wrapper">
+                            <canvas id="chart-modality"></canvas>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="card border-0 shadow-sm rounded-4 p-4 h-100">
+                        <h5 class="fw-bold mb-4 text-dark-soft">Disposición a Virtual</h5>
+                        <div class="chart-wrapper">
+                            <canvas id="chart-open-virtual"></canvas>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="card border-0 shadow-sm rounded-4 p-4 h-100">
+                        <h5 class="fw-bold mb-4 text-dark-soft">Nivel de Compromiso (Virtual)</h5>
+                        <div class="chart-wrapper">
+                            <canvas id="chart-commitment"></canvas>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="card border-0 shadow-sm rounded-4 p-4 h-100">
+                        <h5 class="fw-bold mb-4 text-dark-soft">Disponibilidad de Equipo</h5>
+                        <div class="chart-wrapper">
+                            <canvas id="chart-equipment"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- AI Section -->
+            <section class="mb-5" id="ai-analysis">
+                <div class="d-flex align-items-center gap-2 mb-4">
+                    <div class="bg-primary-soft-bg p-2 rounded-3 text-primary-soft">
+                        <i class="bi bi-stars fs-4"></i>
+                    </div>
+                    <div>
+                        <h2 class="h4 fw-bold mb-0 text-dark-soft">Análisis Inteligente por Campo</h2>
+                        <p class="text-muted small mb-0">Insights generados con procesamiento de lenguaje natural</p>
+                    </div>
+                </div>
+
+                <div class="accordion accordion-flush bg-transparent border-0" id="ai-accordion">
+                    <!-- Reason Presencial -->
+                    <div class="accordion-item shadow-sm rounded-4 overflow-hidden mb-3 border-0">
+                        <h2 class="accordion-header">
+                            <button class="accordion-button collapsed px-4 py-3" type="button" data-bs-toggle="collapse"
+                                data-bs-target="#collapseOne">
+                                <span class="fw-semibold">Razones para preferir modalidad presencial</span>
+                            </button>
+                        </h2>
+                        <div id="collapseOne" class="accordion-collapse collapse" data-bs-parent="#ai-accordion">
+                            <div class="accordion-body p-4 bg-white">
+                                <div class="d-flex justify-content-end mb-3">
+                                    <button class="btn btn-primary-soft btn-sm btn-ai-analyze"
+                                        data-col="reason_presencial">
+                                        <i class="bi bi-magic me-1"></i> Generar Análisis IA
+                                    </button>
+                                </div>
+                                <div id="content-reason_presencial" class="ai-view-container">
+                                    <div class="text-center py-5 text-muted small">
+                                        <i class="bi bi-info-circle me-1"></i> Haz clic en "Generar Análisis IA" para
+                                        procesar los datos.
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Reason Virtual -->
+                    <div class="accordion-item shadow-sm rounded-4 overflow-hidden mb-3 border-0">
+                        <h2 class="accordion-header">
+                            <button class="accordion-button collapsed px-4 py-3" type="button" data-bs-toggle="collapse"
+                                data-bs-target="#collapseTwo">
+                                <span class="fw-semibold">Razones para preferir modalidad virtual o híbrida</span>
+                            </button>
+                        </h2>
+                        <div id="collapseTwo" class="accordion-collapse collapse" data-bs-parent="#ai-accordion">
+                            <div class="accordion-body p-4 bg-white">
+                                <div class="d-flex justify-content-end mb-3">
+                                    <button class="btn btn-primary-soft btn-sm btn-ai-analyze"
+                                        data-col="reason_virtual">
+                                        <i class="bi bi-magic me-1"></i> Generar Análisis IA
+                                    </button>
+                                </div>
+                                <div id="content-reason_virtual" class="ai-view-container">
+                                    <div class="text-center py-5 text-muted small">
+                                        <i class="bi bi-info-circle me-1"></i> Haz clic en "Generar Análisis IA" para
+                                        procesar los datos.
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Comments -->
+                    <div class="accordion-item shadow-sm rounded-4 overflow-hidden border-0">
+                        <h2 class="accordion-header">
+                            <button class="accordion-button collapsed px-4 py-3" type="button" data-bs-toggle="collapse"
+                                data-bs-target="#collapseThree">
+                                <span class="fw-semibold">Comentarios adicionales</span>
+                            </button>
+                        </h2>
+                        <div id="collapseThree" class="accordion-collapse collapse" data-bs-parent="#ai-accordion">
+                            <div class="accordion-body p-4 bg-white">
+                                <div class="d-flex justify-content-end mb-3">
+                                    <button class="btn btn-primary-soft btn-sm btn-ai-analyze" data-col="comments">
+                                        <i class="bi bi-magic me-1"></i> Generar Análisis IA
+                                    </button>
+                                </div>
+                                <div id="content-comments" class="ai-view-container">
+                                    <div class="text-center py-5 text-muted small">
+                                        <i class="bi bi-info-circle me-1"></i> Haz clic en "Generar Análisis IA" para
+                                        procesar los datos.
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- Bootstrap 5 JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Scripts Modulares -->
+    <script type="module" src="js/api.js"></script>
+    <script type="module" src="js/charts.js"></script>
+    <script type="module" src="js/ai_panel.js"></script>
+    <script type="module" src="js/app.js"></script>
+</body>
+
+</html>

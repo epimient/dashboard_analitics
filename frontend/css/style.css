@@ -1,0 +1,223 @@
+/*
+   style.css — Tema Light Pastel (Bootstrap 5)
+   Dashboard limpio y minimalista.
+*/
+
+:root {
+    /* Paleta Pastel */
+    --pastel-blue: #e3f2fd;
+    --pastel-green: #e8f5e9;
+    --pastel-yellow: #fff9c4;
+    --pastel-pink: #fce4ec;
+    --pastel-purple: #f3e5f5;
+
+    --primary-soft: #6c8ef2;
+    --primary-soft-bg: rgba(108, 142, 242, 0.1);
+
+    --success-soft: #4caf50;
+    --warning-soft: #ffb74d;
+    --info-soft: #4dd0e1;
+    --dark-soft: #2c3e50;
+
+    --sidebar-width: 260px;
+    --transition-speed: 0.3s;
+}
+
+body.bg-light-pastel {
+    background-color: #f8fafc;
+    color: var(--dark-soft);
+    font-family: 'Inter', sans-serif;
+}
+
+/* Sidebar Estilizada - Más compacta */
+.sidebar-modern {
+    width: var(--sidebar-width);
+    background-color: white;
+    min-height: 100vh;
+    z-index: 1000;
+}
+
+@media (min-width: 768px) {
+    .sidebar-modern {
+        position: sticky;
+        top: 0;
+    }
+}
+
+.text-primary-soft {
+    color: var(--primary-soft);
+}
+
+.btn-primary-soft {
+    background-color: var(--primary-soft);
+    color: white;
+    border: none;
+}
+
+.btn-primary-soft:hover {
+    background-color: #5a7bd9;
+    color: white;
+}
+
+.bg-primary-soft-bg {
+    background-color: var(--primary-soft-bg);
+}
+
+/* Nav Links */
+.nav-link {
+    color: #64748b;
+    font-weight: 500;
+    border-radius: 10px;
+    padding: 0.75rem 1rem;
+    transition: var(--transition-speed);
+}
+
+.nav-link:hover {
+    background-color: #f1f5f9;
+    color: var(--primary-soft);
+}
+
+.nav-link.active {
+    background-color: var(--primary-soft-bg);
+    color: var(--primary-soft);
+}
+
+/* KPI Cards */
+.kpi-card-modern {
+    border-radius: 16px;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.kpi-card-modern:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 24px rgba(0,0,0,0.08) !important;
+}
+
+.text-success-soft {
+    color: var(--success-soft);
+}
+
+.text-info-soft {
+    color: var(--info-soft);
+}
+
+.text-warning-soft {
+    color: var(--warning-soft);
+}
+
+/* Cards & Containers */
+.card.rounded-4 {
+    border-radius: 16px !important;
+}
+
+.chart-wrapper {
+    height: 280px;
+    position: relative;
+}
+
+/* Accordion Custom */
+.accordion-button:not(.collapsed) {
+    background-color: var(--primary-soft-bg);
+    color: var(--primary-soft);
+    box-shadow: none;
+}
+
+.accordion-button:focus {
+    box-shadow: none;
+    border-color: rgba(0, 0, 0, .125);
+}
+
+.accordion-item {
+    border-radius: 12px !important;
+    overflow: hidden;
+}
+
+/* AI Results */
+.ai-result-body {
+    background-color: #fbfcfe;
+    border-radius: 12px;
+    padding: 1.5rem;
+    border: 1px solid #eef2f7;
+}
+
+.sentiment-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    display: inline-block;
+    margin-right: 6px;
+}
+
+.dot-positive {
+    background-color: #4caf50;
+}
+
+.dot-negative {
+    background-color: #f44336;
+}
+
+.dot-neutral {
+    background-color: #ffb74d;
+}
+
+.pill-soft {
+    background-color: #f1f5f9;
+    color: #475569;
+    padding: 4px 12px;
+    border-radius: 8px;
+    font-size: 0.75rem;
+    margin-right: 5px;
+    margin-bottom: 5px;
+    display: inline-block;
+    font-weight: 500;
+}
+
+/* Borders */
+.border-soft {
+    border-color: #e2e8f0 !important;
+}
+
+/* Buttons in Sidebar */
+.btn-white {
+    background-color: white;
+    border: 1px solid #e2e8f0;
+}
+
+.btn-white:hover {
+    background-color: #f8fafc;
+}
+
+/* Inputs */
+.form-select-sm,
+.form-control-sm {
+    border-radius: 8px;
+    padding-top: 0.4rem;
+    padding-bottom: 0.4rem;
+}
+
+/* Animations */
+.animate-in {
+    animation: fadeIn 0.4s ease-out;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Header */
+.main-body header h1 {
+    font-size: 1.75rem;
+    letter-spacing: -0.5px;
+}
+
+/* Status indicator */
+#data-status {
+    transition: color 0.3s ease;
+}
